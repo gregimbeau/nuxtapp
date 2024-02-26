@@ -22,12 +22,12 @@
 
     <!-- Center: Home Link -->
     <div class="w-1/3 text-center">
-      <NuxtLink to="/" class="text-md">Home</NuxtLink>
+      <NuxtLink to="/" class="text-black text-md">Home</NuxtLink>
     </div>
 
     <!-- Right: Profile Link -->
     <div class="w-1/3 text-right">
-      <NuxtLink to="/contact" class="text-md">Profile</NuxtLink>
+      <NuxtLink to="/contact" class="text-black text-md">Who we are</NuxtLink>
       <!-- This link is a placeholder for a future profile page -->
     </div>
   </nav>

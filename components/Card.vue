@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-sm rounded overflow-hidden shadow-lg">
+  <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
     <img class="w-full" :src="imageUrl" alt="Random Image">
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">A nice picture</div>
