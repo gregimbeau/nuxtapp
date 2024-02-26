@@ -1,8 +1,12 @@
 <template>
   <section class="text-center p-10">
     <h1 class="text-4xl font-bold">Welcome to NuxtApp!</h1>
-    <p class="text-lg mt-4">Your Nuxt.js project with Tailwind CSS is up and running.</p>
-    <!-- Add any additional content specific to your homepage here -->
+    <p class="text-lg mt-4">
+      Your Nuxt.js project with Tailwind CSS is up and running.
+    </p>
+  <div class="flex justify-center">
+    <Card class="p-4 max-w-sm" />
+  </div>
   </section>
 </template>
 
