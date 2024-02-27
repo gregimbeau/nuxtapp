@@ -31,14 +31,14 @@ export default {
   flex-grow: 1; /* Permet au GridComponent de grandir et remplir l'espace disponible */
   flex-shrink: 0; /* Empêche le GridComponent de rétrécir */
   flex-basis: 0; /* Définit la base de départ comme 0 pour permettre la croissance */
-  margin-right: 5px; /* Ajustez selon les besoins */
+  margin-right: 10%; /* Ajustez selon les besoins */
 }
 
 .card-item {
   flex-grow: 0; /* Empêche le Card de grandir */
   flex-shrink: 0; /* Empêche le Card de rétrécir */
   flex-basis: auto; /* La taille de base est la taille naturelle du Card */
-  margin-left: 5px; /* Ajustez selon les besoins */
+  margin-left: 10%; /* Ajustez selon les besoins */
 }
 
 .divider {

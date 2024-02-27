@@ -21,7 +21,7 @@
     <!-- Divider and Particulars Column -->
     <div class="divider"></div>
     <div class="column particulars">
-      <h1 class="text-2xl font-bold mb-4 p-2">Particulars Data</h1>
+      <h1 class="text-2xl font-bold mb-4 p-3">Particulars Data</h1>
       <particuliers />
     </div>
   </div>
