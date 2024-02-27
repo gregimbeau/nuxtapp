@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <!-- Enterprises Column -->
     <div class="column enterprises">
       <div class="p-4">
-        <h1 class="text-2xl font-bold mb-4">Entreprises Data</h1>
+        <h1 class="text-2xl font-bold mb-6">Entreprises Data</h1>
         <input
           type="text"
           v-model="searchQuery"
@@ -14,89 +13,22 @@
           class="mb-4 p-2 bg-blue-500 text-white rounded">
           Search
         </button>
-        <div v-if="loading" class="text-center">Loading...</div>
-        <div v-else>
-          <div
-            v-for="entreprise in apiData.results"
-            :key="entreprise.siren"
-            class="mb-4">
-            <h2 class="text-xl font-semibold">
-              {{ entreprise.nom_complet || "Name Not Available" }}
-            </h2>
-            <div v-for="(value, key) in entreprise" :key="key">
-              <div v-if="key === 'dirigeants'">
-                <strong>{{ formatKey(key) }}:</strong>
-                <div
-                  v-for="(director, index) in value"
-                  :key="index"
-                  class="director-info">
-                  <div>
-                    <strong>Name:</strong> {{ director.nom }},
-                    {{ director.prenoms }}
-                  </div>
-                  <div>
-                    <strong>Birth Year:</strong>
-                    {{ director.annee_de_naissance }}
-                  </div>
-                  <div>
-                    <strong>Birth Date:</strong>
-                    {{ director.date_de_naissance }}
-                  </div>
-                  <div><strong>Position:</strong> {{ director.qualite }}</div>
-                  <div>
-                    <strong>Nationality:</strong> {{ director.nationalite }}
-                  </div>
-                  <div>
-                    <strong>Type:</strong> {{ director.type_dirigeant }}
-                  </div>
-                </div>
-              </div>
-              <div v-else-if="key === 'matching_etablissements'">
-                <!-- Corrected condition here -->
-                <strong>{{ formatKey(key) }}:</strong>
-                <div
-                  v-for="(etablissement, index) in value"
-                  :key="index"
-                  class="etablissement-info">
-                  <div
-                    v-for="(innerValue, innerKey) in etablissement"
-                    :key="innerKey">
-                    <strong>{{ formatKey(innerKey) }}:</strong>
-                    {{ innerValue || "Not Available" }}
-                  </div>
-                </div>
-              </div>
-              <div v-else-if="typeof value === 'object'">
-                <strong>{{ formatKey(key) }}:</strong>
-                <div v-for="(innerValue, innerKey) in value" :key="innerKey">
-                  <span
-                    >{{ formatKey(innerKey) }}:
-                    {{ innerValue || "Not Available" }}</span
-                  >
-                </div>
-              </div>
-              <div v-else>
-                <strong>{{ formatKey(key) }}:</strong>
-                {{ value || "Not Available" }}
-              </div>
-            </div>
-          </div>
-        </div>
+        <div v-if="loading" class="column entreprise">Loading...</div>
+        <ApiEntreprise :data="apiData" />
       </div>
     </div>
 
-    <!-- Divider -->
+    <!-- Divider and Particulars Column -->
     <div class="divider"></div>
     <div class="column particulars">
       <h1 class="text-2xl font-bold mb-4 p-2">Particulars Data</h1>
-
       <particuliers />
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref } from "vue";
+import ApiEntreprise from "../components/ApiEntreprise.vue"; // Assurez-vous que le chemin est correct
 import Particuliers from "./particuliers.vue";
 
 const apiData = ref({ results: [] });
@@ -105,58 +37,44 @@ const searchQuery = ref("");
 
 const fetchData = async () => {
   loading.value = true;
-  apiData.value = { results: [] };
   try {
     const response = await fetch(
       `https://recherche-entreprises.api.gouv.fr/search?q=${encodeURIComponent(
         searchQuery.value
       )}`
     );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
+    if (!response.ok) throw new Error("Network response was not ok");
     apiData.value = await response.json();
   } catch (error) {
     console.error("Fetch error:", error);
+    // Gérer l'erreur ici, par exemple en définissant un message d'erreur dans une variable réactive
   } finally {
     loading.value = false;
   }
 };
-
-function formatKey(key) {
-  // Convert key to string to handle non-string keys
-  const stringKey = String(key);
-
-  return stringKey
-    .replace(/_/g, " ")
-    .replace(/([A-Z])/g, " $1")
-    .trim()
-    .toLowerCase()
-    .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize the first letter
-}
 </script>
 
 <style scoped>
 .container {
   display: flex;
-  justify-content: center; /* Keep items centered horizontally */
-  align-items: stretch; /* Stretches columns to fill the container */
-  height: 100%; /* Adjusts the height to fill the container/screen */
-  max-width: 1200px; /* Set a max-width for larger screens */
-  margin: 0 auto; /* Centers the container on the page */
-  width: 100%; /* Spans the entire width of the container */
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .column {
-  flex: 1; /* Each column takes equal width */
   padding: 10px;
-  box-sizing: border-box; /* Includes padding in the width calculation */
+  box-sizing: border-box;
+  flex: 1;
 }
 
 .divider {
-  flex: 0 0 2px; /* Fixed width for the divider */
+  flex: 0 0 2px;
   background-color: #ccc;
-  self-align: stretch; /* Stretches the divider to the full height */
+  align-self: stretch;
 }
 
 .director-info,
