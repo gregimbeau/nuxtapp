@@ -16,7 +16,7 @@
           stroke-linejoin="round" />
       </svg>
       <NuxtLink to="/22" class="text-[#12b488] text-lg font-semibold"
-        >NuxtApp</NuxtLink
+        >MonAppNuxtKiTue</NuxtLink
       >
     </div>
 
