@@ -45,7 +45,7 @@
         <div class="border-t border-gray-300"></div>
         <NuxtLink
           to="/contact"
-          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white rounded-b-lg">
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white ">
           <!-- Pencil Icon -->
           <svg
             class="h-4 w-4 mr-2"
@@ -61,8 +61,30 @@
           </svg>
           Who we are
         </NuxtLink>
+    <!-- Separator -->
+      <div class="border-t border-gray-300"></div>
+
+      <!-- Liens factices -->
+      <div class="flex rounded-b-lg">
+        <!-- Lien pour les vidéos -->
+        <a href="#" class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-bl-lg">
+          <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Vidéos
+        </a>
+
+        <!-- Lien pour les news -->
+        <a href="#" class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-br-lg">
+          <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+            <polyline points="12 2 12 9 15 9"></polyline>
+          </svg>
+          News
+        </a>
       </div>
-    </transition>
+    </div>
+  </transition>
   </div>
 </template>
 
