@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-4 p-4 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-white rounded-lg shadow-md max-w-4xl mx-auto">
     <!-- Row 1 -->
     <div class="bg-gray-100 p-2 rounded flex items-center justify-center">
       <!-- Placeholder for video -->

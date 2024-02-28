@@ -1,12 +1,12 @@
 <template>
-  <section class="text-center p-10">
+  <section class="text-center py-10">
     <div class="container mx-auto">
       <CTAComponent />
-      <p><br></p>
-      <div class="flex-container">
-        <GridComponent class="grid-item" />
-        <div class="divider"></div>
-        <Card class="card-item" />
+      <p class="my-5"></p>
+      <div class="flex flex-col md:flex-row items-stretch">
+        <GridComponent class="w-full md:w-2/3 xl:w-3/4 flex-grow flex-shrink-0 basis-0 mr-0 md:mr-10" />
+        <div class="h-2 bg-gray-300 my-4 md:my-0 md:h-auto md:w-2 mx-20"></div>
+        <Card class="flex-shrink-0 basis-auto ml-0 md:ml-10" />
       </div>
     </div>
   </section>
