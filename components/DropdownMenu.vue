@@ -16,7 +16,7 @@
     </svg>
 
     <NuxtLink to="/22" class="text-[#12b488] text-lg font-semibold"
-      >MonAppNuxtKiTue</NuxtLink
+      >MyKillaNuxtApp</NuxtLink
     >
     <transition name="fade">
       <div

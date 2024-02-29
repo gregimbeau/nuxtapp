@@ -27,17 +27,5 @@
 </template>
 
 <style scoped>
-/* a {
-    display: inline-block; 
-    padding: 2px 4px; 
-    margin: 0; 
-    box-sizing: border-box; 
-    transition: background-color 0.3s, color 0.3s; 
-    border-radius: 4px; 
-  }
 
-  a:hover {
-    background-color: #12b488; 
-    color: white; 
-  } */
 </style>
