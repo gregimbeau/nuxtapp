@@ -46,14 +46,26 @@
           Se connecter
         </NuxtLink>
 
+        <div
+          v-if="isLoggedIn"
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
+          <a href="#" @click.prevent="handleLogout" class="flex items-center">
+            <svg
+              class="h-4 w-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15.172 7l-6.364 6.364L15.172 20M19 12H3"></path></svg
+            >Se déconnecter
+          </a>
+        </div>
         <div class="border-t border-gray-300"></div>
 
-        <div v-if="isLoggedIn">
-          <a href="#" class="dropdown-item" @click.prevent="logout"
-            >Se déconnecter</a
-          >
-          <NuxtLink to="/profile" class="dropdown-item">Profil</NuxtLink>
-        </div>
         <NuxtLink
           to="/contact"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
@@ -121,27 +133,48 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-const isLoggedIn = ref(false); // Gère l'état de connexion
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth } from "@/composables/useAuth"; // Make sure the path is correct
 
+const { isLoggedIn, logout, checkAuthStatus } = useAuth();
 const showDropdown = ref(false);
 const router = useRouter();
 
-const hideDropdown = () => {
-  setTimeout(() => {
-    showDropdown.value = false;
-  }, 500); // Ajoute un délai de 500 ms avant de cacher le menu
+// Function to handle the custom 'auth-change' event
+const handleAuthChange = (event) => {
+  // Directly update isLoggedIn based on the event detail
+  isLoggedIn.value = event.detail.isLoggedIn;
 };
+
+onMounted(() => {
+  checkAuthStatus(); // Initial check for the current auth status
+  
+  // Add event listener for auth changes
+  window.addEventListener('auth-change', handleAuthChange);
+});
+
+onUnmounted(() => {
+  // Remove event listener when component unmounts to prevent memory leaks
+  window.removeEventListener('auth-change', handleAuthChange);
+});
 
 const displayDropdown = () => {
   showDropdown.value = true;
 };
-const logout = () => {
-  isLoggedIn.value = false;
-  router.push("/login");
+
+const hideDropdown = () => {
+  setTimeout(() => {
+    showDropdown.value = false;
+  }, 500);
+};
+
+const handleLogout = () => {
+  logout();
+  hideDropdown(); // Hide the dropdown menu after logging out
 };
 </script>
+
 
 <style scoped>
 .group {
@@ -151,11 +184,12 @@ const logout = () => {
 
 .dropdown-content {
   top: 100%; /* Se positionne en dessous de l'élément déclencheur */
-  transform: translateX(-71%); /* Déplace le menu vers la gauche pour s'aligner avec le bord droit de l'élément parent */
+  transform: translateX(
+    -71%
+  ); /* Déplace le menu vers la gauche pour s'aligner avec le bord droit de l'élément parent */
   width: max-content;
   z-index: 50;
 }
-
 
 .dropdown-item {
   padding: 8px 12px;
