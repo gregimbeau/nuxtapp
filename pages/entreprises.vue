@@ -57,36 +57,58 @@ const fetchData = async () => {
 <style scoped>
 .container {
   display: flex;
+  flex-wrap: wrap; /* Allow items to wrap as needed */
   justify-content: center;
-  align-items: stretch;
-  height: 100%;
+  align-items: flex-start; /* Adjust alignment to start to handle different heights */
+  gap: 20px; /* Add some space between flex items */
+  height: auto; /* Adjust height to be auto for flexibility */
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
+  padding: 20px; /* Add some padding for smaller screens */
+  box-sizing: border-box; /* Include padding in the width calculation */
 }
 
 .column {
   padding: 10px;
   box-sizing: border-box;
-  flex: 1;
+  flex: 1 1 100%; /* Make columns full width on smaller screens */
+  min-width: 0; /* Prevent flex items from overflowing */
 }
 
 .divider {
-  flex: 0 0 2px;
-  background-color: #ccc;
-  align-self: stretch;
+  display: none; /* Hide divider on smaller screens */
 }
 
-.director-info,
-.etablissement-info {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .container {
+    flex-wrap: nowrap; /* Prevent wrapping on larger screens */
+    padding: 20px 0; /* Adjust padding */
+  }
+
+  .column {
+    flex: 1; /* Adjust columns to share available space equally */
+  }
+
+  .divider {
+    display: block; /* Show divider on larger screens */
+    flex: 0 0 2px; /* Adjust divider width and prevent it from growing */
+    background-color: #ccc;
+    align-self: stretch; /* Stretch divider to fill parent height */
+  }
 }
 
-.director-info > div,
-.etablissement-info > div {
-  margin-bottom: 5px;
+/* Improve form elements responsiveness */
+input[type="text"],
+button {
+  width: 100%; /* Full width for smaller screens */
+  box-sizing: border-box; /* Include padding and border in the element's width */
+}
+
+@media (min-width: 768px) {
+  input[type="text"],
+  button {
+    max-width: 400px; /* Limit width on larger screens */
+  }
 }
 </style>

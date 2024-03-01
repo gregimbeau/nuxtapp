@@ -20,3 +20,12 @@ export default {
   },
 };
 </script>
+
+<style>
+/* Assuming Navbar and Footer have specific classes or you can add them */
+.navbar, .footer {
+  z-index: 10; /* Adjust as necessary */
+  width: 100%;
+}
+
+</style>
