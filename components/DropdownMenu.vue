@@ -1,23 +1,7 @@
 <template>
   <div class="relative flex items-center group">
-    <svg
-      class="h-6 w-6 mr-2 cursor-pointer"
-      @mouseover="displayDropdown"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <!-- SVG content -->
-      <path
-        d="M12 2L21.5 22H2.5L12 2Z"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
+    <div MyLogo @mouseover="displayDropdown">Menu</div>
 
-    <NuxtLink to="/22" class="text-[#12b488] text-lg font-semibold"
-      >MyKillaNuxtApp</NuxtLink
-    >
     <transition name="fade">
       <div
         v-if="showDropdown"
@@ -44,8 +28,35 @@
         <!-- Separator -->
         <div class="border-t border-gray-300"></div>
         <NuxtLink
+          v-if="!isLoggedIn"
+          to="/login"
+          class="dropdown-item flex items-center">
+          <svg
+            class="h-4 w-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.172 7l-6.364 6.364L15.172 20M19 12H3"></path>
+          </svg>
+          Se connecter
+        </NuxtLink>
+
+        <div class="border-t border-gray-300"></div>
+
+        <div v-if="isLoggedIn">
+          <a href="#" class="dropdown-item" @click.prevent="logout"
+            >Se déconnecter</a
+          >
+          <NuxtLink to="/profile" class="dropdown-item">Profil</NuxtLink>
+        </div>
+        <NuxtLink
           to="/contact"
-          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white ">
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
           <!-- Pencil Icon -->
           <svg
             class="h-4 w-4 mr-2"
@@ -61,36 +72,61 @@
           </svg>
           Who we are
         </NuxtLink>
-    <!-- Separator -->
-      <div class="border-t border-gray-300"></div>
+        <!-- Separator -->
+        <div class="border-t border-gray-300"></div>
 
-      <!-- Liens factices -->
-      <div class="flex rounded-b-lg">
-        <!-- Lien pour les vidéos -->
-        <a href="#" class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-bl-lg">
-          <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          Vidéos
-        </a>
+        <!-- Liens factices -->
+        <div class="flex rounded-b-lg">
+          <!-- Lien pour les vidéos -->
+          <a
+            href="#"
+            class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-bl-lg">
+            <svg
+              class="h-4 w-4 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Vidéos
+          </a>
 
-        <!-- Lien pour les news -->
-        <a href="#" class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-br-lg">
-          <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-            <polyline points="12 2 12 9 15 9"></polyline>
-          </svg>
-          News
-        </a>
+          <!-- Lien pour les news -->
+          <a
+            href="#"
+            class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-br-lg">
+            <svg
+              class="h-4 w-4 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+              <polyline points="12 2 12 9 15 9"></polyline>
+            </svg>
+            News
+          </a>
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const isLoggedIn = ref(false); // Gère l'état de connexion
+
 const showDropdown = ref(false);
+const router = useRouter();
 
 const hideDropdown = () => {
   setTimeout(() => {
@@ -101,9 +137,26 @@ const hideDropdown = () => {
 const displayDropdown = () => {
   showDropdown.value = true;
 };
+const logout = () => {
+  isLoggedIn.value = false;
+  router.push("/login");
+};
 </script>
 
 <style scoped>
+.group {
+  /* Assurez-vous que cet élément est bien positionné à droite */
+  margin-left: auto; /* Pour pousser l'élément à droite si c'est dans un flex container */
+}
+
+.dropdown-content {
+  top: 100%; /* Se positionne en dessous de l'élément déclencheur */
+  transform: translateX(-71%); /* Déplace le menu vers la gauche pour s'aligner avec le bord droit de l'élément parent */
+  width: max-content;
+  z-index: 50;
+}
+
+
 .dropdown-item {
   padding: 8px 12px;
   color: black;
@@ -118,11 +171,13 @@ const displayDropdown = () => {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 
-.fade-enter-to, .fade-leave-from {
+.fade-enter-to,
+.fade-leave-from {
   opacity: 1;
 }
 </style>
