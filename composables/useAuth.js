@@ -44,15 +44,21 @@ export function useAuth() {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("isLoggedIn");
-    isLoggedIn.value = false;
+const logout = () => {
+  localStorage.removeItem("isLoggedIn");
+  isLoggedIn.value = false;
 
-    // Show a flash message after logging out
-    flashMessage.show("You've been logged out successfully.", "info");
+  // Corrected: Use showMessage to display a logout message
+  showMessage("You've been logged out successfully.", "info");
 
-    router.push("/");
-  };
+  // Dispatch an event if needed, to inform other parts of your app about the logout
+  window.dispatchEvent(
+    new CustomEvent("auth-change", { detail: { isLoggedIn: false } })
+  );
+
+  router.push("/");
+};
+
 
   const checkAuthStatus = () => {
     isLoggedIn.value = localStorage.getItem("isLoggedIn") === "true";
