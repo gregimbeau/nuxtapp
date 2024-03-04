@@ -69,16 +69,16 @@ const handleLogin = async () => {
     if (!loginCompleted.value) {
       loginButtonText.value = "Validating Credentials";
     }
-  }, 2000);
+  }, 5000);
 
   // Conditionally schedule "Almost there..." after an additional 5 seconds (10 seconds in total)
   const almostThereTimeout = setTimeout(() => {
     if (!loginCompleted.value) {
       loginButtonText.value = "Almost there...";
     }
-  }, 2000);
+  }, 10000);
 
-  // Simulate login operation and complete after 20 seconds
+  // Simulate login operation and complete after additionnal time
   setTimeout(async () => {
     if (!loginCompleted.value) {
       await login(credentials.value);
@@ -89,7 +89,7 @@ const handleLogin = async () => {
     }
     // If login completes before the "Almost there..." message, cancel the scheduled message
     clearTimeout(almostThereTimeout);
-  }, 2000); // This simulates the login delay. Adjust as needed based on actual login response time
+  }, 11000); // This simulates the login delay. Adjust as needed based on actual login response time
 };
 
 </script>
