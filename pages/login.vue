@@ -11,11 +11,25 @@
     </div>
     
     <!-- Right Side -->
-    <div class="w-1/2 flex justify-center items-center bg-gray-100">
-      <LoginForm />
+    <div class="w-1/2 flex flex-col justify-center items-center bg-gray-100 space-y-4">
+      <div class="w-full max-w-md">
+        <LoginForm />
+      </div>
+      <pre class="text-green-500 w-2/6 flex flex-col justify-center items-center bg-black space-y-4">
+        <code>
+//compte de test
+
+{
+  "username": "testUser2",
+  "password": "password123"
+}
+        </code>
+      </pre>
     </div>
+    
   </div>
 </template>
+
 
 <script setup>
 import LoginForm from '../components/LoginForm.vue';
