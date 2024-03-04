@@ -1,12 +1,14 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useRuntimeConfig } from "#imports";
+import { useFlashMessage } from "@/composables/useFlashMessage";
 
 export function useAuth() {
   const router = useRouter();
-  const isLoggedIn = ref(false);
   const config = useRuntimeConfig();
   const apiUrl = config.public.apiUrl;
+  const isLoggedIn = ref(false);
+  const { showMessage } = useFlashMessage();
 
   const login = async (credentials) => {
     try {
@@ -19,23 +21,25 @@ export function useAuth() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur de connexion");
+        throw new Error("Login error");
       }
+
       const data = await response.json();
-      console.log("Connexion réussie:", data);
       localStorage.setItem("isLoggedIn", "true");
       isLoggedIn.value = true;
 
-      // Dispatch a custom event after successful login
+      // Use showMessage to display a success message
+      showMessage("Login successful!", "success");
       window.dispatchEvent(
         new CustomEvent("auth-change", { detail: { isLoggedIn: true } })
       );
-
-      router.push("/");
+      // Redirect after login
+      await router.push("/");
     } catch (error) {
-      console.error("Erreur lors de la connexion:", error);
-      alert(
-        "Erreur lors de la connexion. Veuillez vérifier vos informations d'identification et réessayer."
+      // Display an error message using showMessage
+      showMessage(
+        "Login failed. Please check your credentials and try again.",
+        "error"
       );
     }
   };
@@ -44,12 +48,10 @@ export function useAuth() {
     localStorage.removeItem("isLoggedIn");
     isLoggedIn.value = false;
 
-    // Dispatch a custom event after logout
-    window.dispatchEvent(
-      new CustomEvent("auth-change", { detail: { isLoggedIn: false } })
-    );
+    // Show a flash message after logging out
+    flashMessage.show("You've been logged out successfully.", "info");
 
-    router.push("/login");
+    router.push("/");
   };
 
   const checkAuthStatus = () => {

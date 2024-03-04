@@ -1,4 +1,7 @@
 <template>
+  <div>
+  <FlashMessage />
+  </div>
   <section class="text-center py-10 bg-cover bg-center relative custom-background">
     <div class="absolute inset-0 bg-gray-50 bg-opacity-50"></div> <!-- Optional: overlay to improve text readability -->
     <div class="container mx-auto relative z-10">
@@ -13,12 +16,10 @@
   </section>
 </template>
 
-<script>
-// Page-specific JavaScript here
-export default {
-  // No need to specify the layout if using the default
-};
+<script setup>
+import FlashMessage from '~/components/FlashMessage.vue';
 </script>
+
 
 <style>
 body {
@@ -61,4 +62,5 @@ body {
 @media (max-width: 480px) {
   /* Further adjustments for very small screens */
 }
+
 </style>
