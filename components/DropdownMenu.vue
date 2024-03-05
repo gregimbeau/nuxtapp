@@ -1,10 +1,28 @@
 <template>
   <div class="relative flex items-center group">
-    <div MyLogo @mouseover="displayDropdown">Menu</div>
+    <!-- Hamburger Icon for small screens -->
+<div ref="hamburgerRef" @click="displayDropdown($event)" class="lg:hidden">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </div>
+
+    <!-- Text Menu for larger screens -->
+    <div @mouseover="displayDropdown" class="hidden lg:block">Menu</div>
 
     <transition name="fade">
       <div
         v-if="showDropdown"
+        ref="dropdownRef"
         class="dropdown-content absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg flex flex-col z-50"
         @mouseleave="hideDropdown">
         <NuxtLink
@@ -135,31 +153,52 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "@/composables/useAuth"; // Make sure the path is correct
-
+import { useAuth } from "@/composables/useAuth";
+const dropdownRef = ref(null);
+const hamburgerRef = ref(null);
 const { isLoggedIn, logout, checkAuthStatus } = useAuth();
 const showDropdown = ref(false);
 const router = useRouter();
 
-// Function to handle the custom 'auth-change' event
+
+// This computed property checks if the device is considered a desktop or tablet
+const isDesktopOrTablet = computed(() => {
+  const width = window.innerWidth;
+  return width > 768; // Adjust this value if needed
+});
+
+
+
 const handleAuthChange = (event) => {
   // Directly update isLoggedIn based on the event detail
   isLoggedIn.value = event.detail.isLoggedIn;
 };
 
-onMounted(() => {
-  checkAuthStatus(); // Initial check for the current auth status
+const onClickOutside = (event) => {
+  // Check if the click is on the hamburger icon or outside the dropdown
+  if (hamburgerRef.value && hamburgerRef.value.contains(event.target)) {
+    // Click on the hamburger, toggle the dropdown
+    showDropdown.value = !showDropdown.value;
+  } else if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+    // Click outside the dropdown, close it
+    showDropdown.value = false;
+  }
+};
 
-  // Add event listener for auth changes
+onMounted(() => {
+  checkAuthStatus();
+  window.addEventListener("click", onClickOutside);
   window.addEventListener("auth-change", handleAuthChange);
 });
 
 onUnmounted(() => {
-  // Remove event listener when component unmounts to prevent memory leaks
+  window.removeEventListener("click", onClickOutside);
   window.removeEventListener("auth-change", handleAuthChange);
 });
 
-const displayDropdown = () => {
+const displayDropdown = (event) => {
+  
+  event.stopPropagation(); 
   showDropdown.value = true;
 };
 
@@ -177,14 +216,13 @@ const handleLogout = () => {
 
 <style scoped>
 .group {
-  /* Assurez-vous que cet élément est bien positionné à droite */
   margin-left: auto; /* Pour pousser l'élément à droite si c'est dans un flex container */
 }
 
 .dropdown-content {
   top: 100%; /* Se positionne en dessous de l'élément déclencheur */
   transform: translateX(
-    -71%
+    -81%
   ); /* Déplace le menu vers la gauche pour s'aligner avec le bord droit de l'élément parent */
   width: max-content;
   z-index: 50;

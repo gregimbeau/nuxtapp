@@ -7,10 +7,10 @@
     <div class="container mx-auto relative z-10">
       <CTAComponent />
       <p class="my-5"></p>
-      <div class="flex flex-col md:flex-row items-stretch">
-        <GridComponent class="w-full md:w-2/3 xl:w-3/4 flex-grow flex-shrink-0 basis-0 mr-0 md:mr-20" />
-        <div class="h-2 bg-gray-300 my-4 md:my-0 md:h-auto md:w-0.5 mx-20"></div>
-        <Card class="flex-shrink-0 basis-auto ml-0 md:ml-20" />
+      <div class="flex flex-col lg:flex-row items-stretch">
+        <GridComponent class="w-full lg:w-2/3 xl:w-3/4 flex-grow flex-shrink-0 basis-0 mr-0 lg:mr-20" />
+        <div class="h-2 bg-gray-300 my-4 lg:my-0 lg:h-auto md:w-0.5 mx-20 ml-10"></div>
+        <Card class="flex-shrink-0 basis-auto ml-0 lg: mx-auto" />
       </div>
     </div>
   </section>
