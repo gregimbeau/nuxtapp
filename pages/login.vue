@@ -40,6 +40,8 @@
   "username": "testUser2",
   "password": "password123"
 }
+
+// Please be patient, slow login server
         </code>
       </pre>
     </div>
@@ -64,10 +66,13 @@ const handleLoginEnd = () => {
 <style scoped>
 .test-account-info {
   color: rgb(8, 242, 8);
+  font-size: 12px !important;
   background-color: black;
   padding: 1rem;
   border-radius: 0.5rem;
   overflow: auto;
+  height: 210px;
+  overflow: hidden;
 }
 
 /* Adjustments for smaller screens */
