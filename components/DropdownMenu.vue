@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex items-center group">
     <!-- Hamburger Icon for small screens -->
-<div ref="hamburgerRef" @click="displayDropdown($event)" class="lg:hidden">
+    <div ref="hamburgerRef" @click="displayDropdown($event)" class="lg:hidden">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -45,6 +45,28 @@
         </NuxtLink>
         <!-- Separator -->
         <div class="border-t border-gray-300"></div>
+
+        <NuxtLink
+          v-if="isLoggedIn"
+          to="/profile"
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
+          <!-- Profile Icon -->
+          <svg
+            class="h-4 w-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-2.21 0-6 1.343-6 4v2h12v-2c0-2.657-3.79-4-6-4z"></path>
+          </svg>
+          Profile
+        </NuxtLink>
+        <div v-if="isLoggedIn" class="border-t border-gray-300"></div>
+
         <NuxtLink
           v-if="!isLoggedIn"
           to="/login"
@@ -107,7 +129,7 @@
 
         <div class="flex rounded-b-lg">
           <!-- Lien pour les vidéos -->
-          <NuxtLink 
+          <NuxtLink
             to="/videos"
             class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-bl-lg">
             <svg
@@ -159,14 +181,11 @@ const { isLoggedIn, logout, checkAuthStatus } = useAuth();
 const showDropdown = ref(false);
 const router = useRouter();
 
-
 // This computed property checks if the device is considered a desktop or tablet
 const isDesktopOrTablet = computed(() => {
   const width = window.innerWidth;
   return width > 768; // Adjust this value if needed
 });
-
-
 
 const handleAuthChange = (event) => {
   // Directly update isLoggedIn based on the event detail
@@ -196,8 +215,7 @@ onUnmounted(() => {
 });
 
 const displayDropdown = (event) => {
-  
-  event.stopPropagation(); 
+  event.stopPropagation();
   showDropdown.value = true;
 };
 

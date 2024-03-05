@@ -10,6 +10,9 @@ export function useAuth() {
   const isLoggedIn = ref(false);
   const { showMessage } = useFlashMessage();
 
+  // Helper function to determine if we're running on the client
+  const isClient = () => typeof window !== "undefined";
+
   const login = async (credentials) => {
     try {
       const response = await fetch(`${apiUrl}/login`, {
@@ -25,18 +28,18 @@ export function useAuth() {
       }
 
       const data = await response.json();
-      localStorage.setItem("isLoggedIn", "true");
+      if (isClient()) {
+        localStorage.setItem("isLoggedIn", "true");
+      }
       isLoggedIn.value = true;
 
-      // Use showMessage to display a success message
       showMessage("Login successful!", "success");
       window.dispatchEvent(
         new CustomEvent("auth-change", { detail: { isLoggedIn: true } })
       );
-      // Redirect after login
+
       await router.push("/");
     } catch (error) {
-      // Display an error message using showMessage
       showMessage(
         "Login failed. Please check your credentials and try again.",
         "error"
@@ -44,25 +47,31 @@ export function useAuth() {
     }
   };
 
-const logout = () => {
-  localStorage.removeItem("isLoggedIn");
-  isLoggedIn.value = false;
+  const logout = () => {
+    if (isClient()) {
+      localStorage.removeItem("isLoggedIn");
+    }
+    isLoggedIn.value = false;
 
-  // Corrected: Use showMessage to display a logout message
-  showMessage("You've been logged out successfully.", "info");
+    showMessage("You've been logged out successfully.", "info");
+    window.dispatchEvent(
+      new CustomEvent("auth-change", { detail: { isLoggedIn: false } })
+    );
 
-  // Dispatch an event if needed, to inform other parts of your app about the logout
-  window.dispatchEvent(
-    new CustomEvent("auth-change", { detail: { isLoggedIn: false } })
-  );
-
-  router.push("/");
-};
-
-
-  const checkAuthStatus = () => {
-    isLoggedIn.value = localStorage.getItem("isLoggedIn") === "true";
+    router.push("/");
   };
+
+const checkAuthStatus = () => {
+  return new Promise((resolve) => {
+    if (isClient()) {
+      isLoggedIn.value = localStorage.getItem("isLoggedIn") === "true";
+      resolve(isLoggedIn.value);
+    } else {
+      resolve(false);
+    }
+  });
+};
+;
 
   return { isLoggedIn, login, logout, checkAuthStatus };
 }
