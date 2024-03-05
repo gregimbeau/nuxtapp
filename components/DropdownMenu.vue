@@ -105,11 +105,10 @@
         <!-- Separator -->
         <div class="border-t border-gray-300"></div>
 
-        <!-- Liens factices -->
         <div class="flex rounded-b-lg">
           <!-- Lien pour les vidéos -->
-          <a
-            href="#"
+          <NuxtLink 
+            to="/videos"
             class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-bl-lg">
             <svg
               class="h-4 w-4 mr-2"
@@ -123,11 +122,11 @@
               <polygon points="5 3 19 12 5 21 5 3"></polygon>
             </svg>
             Vidéos
-          </a>
+          </NuxtLink>
 
           <!-- Lien pour les news -->
-          <a
-            href="#"
+          <NuxtLink
+            to="/news"
             class="flex-1 dropdown-item flex items-center justify-center bg-gray-200 rounded-br-lg">
             <svg
               class="h-4 w-4 mr-2"
@@ -143,7 +142,7 @@
               <polyline points="12 2 12 9 15 9"></polyline>
             </svg>
             News
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </transition>
