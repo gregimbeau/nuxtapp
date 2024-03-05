@@ -5,19 +5,21 @@ export const useNews = () => {
   const loading = ref(false);
   const error = ref(null);
 
+  const config = useRuntimeConfig();
+  const apiKey = config.public.newsApiKey;
+
   const fetchNews = async () => {
     loading.value = true;
     try {
-      // NewsAPI endpoint for fetching news about Bitcoin
-      const apiKey = "68ca5b05972d4c468bc05e0e80ce7f81"; // Use an environment variable in production
-      const main_url = `https://newsapi.org/v2/everything?q=bitcoin&apiKey=${apiKey}`;
-
+      const main_url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=au,us`;
       const response = await fetch(main_url);
-      if (!response.ok) throw new Error("Failed to fetch news");
+      if (!response.ok) {
+        throw new Error(`Failed to fetch news: ${response.status}`);
+      }
       const data = await response.json();
-      news.value = data.articles;
+      news.value = data.results;
     } catch (err) {
-      error.value = err.message;
+      error.value = `Fetch error: ${err.message}`;
     } finally {
       loading.value = false;
     }

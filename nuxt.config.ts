@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   runtimeConfig: {
     public: {
-      apiUrl: process.env.PUBLIC_VUE_APP_API_URL, // make sure this env variable is set in your .env file
+      apiUrl: process.env.PUBLIC_VUE_APP_API_URL,
+      newsApiKey: process.env.NEWS_API_KEY,
     },
   },
 });
