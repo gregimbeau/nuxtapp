@@ -43,7 +43,7 @@
               stroke-width="2"
               d="M15.172 7l-6.364 6.364L15.172 20M19 12H3"></path>
           </svg>
-          Se connecter
+          Logging In
         </NuxtLink>
 
         <div
@@ -61,7 +61,7 @@
                 stroke-linejoin="round"
                 stroke-width="2"
                 d="M15.172 7l-6.364 6.364L15.172 20M19 12H3"></path></svg
-            >Se déconnecter
+            >Logging out
           </a>
         </div>
         <div class="border-t border-gray-300"></div>
@@ -133,8 +133,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import { useAuth } from "@/composables/useAuth"; // Make sure the path is correct
 
 const { isLoggedIn, logout, checkAuthStatus } = useAuth();
@@ -149,14 +149,14 @@ const handleAuthChange = (event) => {
 
 onMounted(() => {
   checkAuthStatus(); // Initial check for the current auth status
-  
+
   // Add event listener for auth changes
-  window.addEventListener('auth-change', handleAuthChange);
+  window.addEventListener("auth-change", handleAuthChange);
 });
 
 onUnmounted(() => {
   // Remove event listener when component unmounts to prevent memory leaks
-  window.removeEventListener('auth-change', handleAuthChange);
+  window.removeEventListener("auth-change", handleAuthChange);
 });
 
 const displayDropdown = () => {
@@ -174,7 +174,6 @@ const handleLogout = () => {
   hideDropdown(); // Hide the dropdown menu after logging out
 };
 </script>
-
 
 <style scoped>
 .group {
