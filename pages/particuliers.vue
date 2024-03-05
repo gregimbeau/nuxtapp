@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-model="query" @input="search" placeholder="Enter search term" class="mb-4 p-2 border border-gray-300 rounded"/>
+    <input v-model="query" @input="search" placeholder="Enter search term" class="mb-4 p-2 border border-gray-300 rounded w-full"/>
     <apiAdresse :addresses="addresses" />
   </div>
 </template>

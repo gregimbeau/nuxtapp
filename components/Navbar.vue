@@ -4,7 +4,7 @@
     <div class="flex items-center">
       <MyLogo />
       <NuxtLink to="/exemple_404" class="text-[#12b488] text-lg font-semibold ml-2">
-        MyKillaNuxtApp
+        KamiNuxtApp
       </NuxtLink>
     </div>
 

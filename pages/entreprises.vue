@@ -7,7 +7,7 @@
           type="text"
           v-model="searchQuery"
           placeholder="Enter company name"
-          class="mb-4 p-2 border border-gray-300 rounded" />
+          class="mb-4 p-2 border border-gray-300 rounded w-full" />
         <button
           @click="fetchData"
           class="mb-4 p-2 bg-blue-500 text-white rounded">
@@ -20,8 +20,8 @@
 
     <!-- Divider and Particulars Column -->
     <div class="divider"></div>
-    <div class="column particulars">
-      <h1 class="text-2xl font-bold mb-4 p-3">Addresses Data (FR)</h1>
+    <div class="column particulars ml-4 mr-4 mb-4 p-2 ">
+      <h1 class="text-2xl font-bold mb-2 p-4">Addresses Data (FR)</h1>
       <particuliers />
     </div>
   </div>
