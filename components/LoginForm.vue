@@ -5,7 +5,7 @@
       class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div class="mb-4">
         <label for="username" class="block text-gray-700 text-sm font-bold mb-2"
-          >Nom d'utilisateur:</label
+          >User Name:</label
         >
         <input
           id="username"
@@ -16,7 +16,7 @@
       </div>
       <div class="mb-6">
         <label for="password" class="block text-gray-700 text-sm font-bold mb-2"
-          >Mot de passe:</label
+          >Password:</label
         >
         <input
           id="password"
@@ -51,7 +51,7 @@ import { useAuth } from "@/composables/useAuth";
 
 const { login, checkAuthStatus } = useAuth();
 const credentials = ref({ username: "", password: "" });
-const loginButtonText = ref("Se connecter");
+const loginButtonText = ref("Logging In");
 const isLoggingIn = ref(false);
 
 // Add a ref to track if the login has completed
@@ -83,7 +83,7 @@ const handleLogin = async () => {
       await login(credentials.value);
       loginCompleted.value = true; // Mark login as completed
       isLoggingIn.value = false;
-      loginButtonText.value = "Se connecter";
+      loginButtonText.value = "Logging In";
       // Add your redirection logic here, if applicable
     }
     // If login completes before the "Almost there..." message, cancel the scheduled message

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="column enterprises">
       <div class="p-4">
-        <h1 class="text-2xl font-bold mb-6">Entreprises Data</h1>
+        <h1 class="text-2xl font-bold mb-6">Entreprises Data (FR)</h1>
         <input
           type="text"
           v-model="searchQuery"
@@ -21,7 +21,7 @@
     <!-- Divider and Particulars Column -->
     <div class="divider"></div>
     <div class="column particulars">
-      <h1 class="text-2xl font-bold mb-4 p-3">Particulars Data</h1>
+      <h1 class="text-2xl font-bold mb-4 p-3">Addresses Data (FR)</h1>
       <particuliers />
     </div>
   </div>
