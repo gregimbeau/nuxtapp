@@ -3,7 +3,6 @@
 export default defineNuxtConfig({
   // devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
-  css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   runtimeConfig: {
     public: {
       apiUrl: process.env.PUBLIC_VUE_APP_API_URL,

@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { useAuthStore } from "@/stores/auth";
 
 const credentials = ref({ username: "", password: "" });
 const loginButtonText = ref("Log In");

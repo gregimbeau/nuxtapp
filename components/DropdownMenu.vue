@@ -173,7 +173,6 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useAuthStore } from '@/stores/auth'; 
 
 const dropdownRef = ref(null);
 const hamburgerRef = ref(null);
