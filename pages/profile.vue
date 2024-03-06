@@ -9,18 +9,22 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import { useAuth } from '@/composables/useAuth';
-import { useRouter } from 'vue-router'; // Import useRouter
+import { useAuthStore } from '@/stores/auth';
 
-const { logout, checkAuthStatus, isLoggedIn } = useAuth();
-const router = useRouter(); // Get the router instance
+const authStore = useAuthStore();
+const router = useRouter(); 
 
-onMounted(async () => {
-  await checkAuthStatus();
-  if (!isLoggedIn.value) {
-    router.push('/login'); // Use the router instance to navigate
+onMounted(() => {
+  authStore.checkAuthStatus(); 
+  if (!authStore.isLoggedIn) {
+    router.push('/login'); 
   }
 });
+
+const logout = () => {
+  authStore.logout();
+};
 </script>
+
 
 

@@ -47,7 +47,7 @@
         <div class="border-t border-gray-300"></div>
 
         <NuxtLink
-          v-if="isLoggedIn"
+          v-if="authStore.isLoggedIn"
           to="/profile"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
           <!-- Profile Icon -->
@@ -65,10 +65,10 @@
           </svg>
           Profile
         </NuxtLink>
-        <div v-if="isLoggedIn" class="border-t border-gray-300"></div>
+        <div v-if="authStore.isLoggedIn" class="border-t border-gray-300"></div>
 
         <NuxtLink
-          v-if="!isLoggedIn"
+          v-if="!authStore.isLoggedIn"
           to="/login"
           class="dropdown-item flex items-center">
           <svg
@@ -87,7 +87,7 @@
         </NuxtLink>
 
         <div
-          v-if="isLoggedIn"
+          v-if="authStore.isLoggedIn"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
           <a href="#" @click.prevent="handleLogout" class="flex items-center">
             <svg
@@ -172,46 +172,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth } from "@/composables/useAuth";
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useAuthStore } from '@/stores/auth'; 
+
 const dropdownRef = ref(null);
 const hamburgerRef = ref(null);
-const { isLoggedIn, logout, checkAuthStatus } = useAuth();
+const authStore = useAuthStore();
 const showDropdown = ref(false);
 const router = useRouter();
 
-// This computed property checks if the device is considered a desktop or tablet
+// Cette propriété calculée vérifie si l'appareil est considéré comme un bureau ou une tablette
 const isDesktopOrTablet = computed(() => {
   const width = window.innerWidth;
-  return width > 768; // Adjust this value if needed
+  return width > 768;
 });
 
 const handleAuthChange = (event) => {
-  // Directly update isLoggedIn based on the event detail
-  isLoggedIn.value = event.detail.isLoggedIn;
+  // Mettez directement à jour isLoggedIn en fonction du détail de l'événement
+  authStore.isLoggedIn = event.detail.isLoggedIn;
 };
 
 const onClickOutside = (event) => {
-  // Check if the click is on the hamburger icon or outside the dropdown
+  // Vérifiez si le clic est sur l'icône hamburger ou à l'extérieur du menu déroulant
   if (hamburgerRef.value && hamburgerRef.value.contains(event.target)) {
-    // Click on the hamburger, toggle the dropdown
+    // Clic sur le hamburger, basculez le menu déroulant
     showDropdown.value = !showDropdown.value;
   } else if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
-    // Click outside the dropdown, close it
+    // Clic à l'extérieur du menu déroulant, fermez-le
     showDropdown.value = false;
   }
 };
 
 onMounted(() => {
-  checkAuthStatus();
-  window.addEventListener("click", onClickOutside);
-  window.addEventListener("auth-change", handleAuthChange);
+  authStore.checkAuthStatus();
+  window.addEventListener('click', onClickOutside);
+  window.addEventListener('auth-change', handleAuthChange);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("click", onClickOutside);
-  window.removeEventListener("auth-change", handleAuthChange);
+  window.removeEventListener('click', onClickOutside);
+  window.removeEventListener('auth-change', handleAuthChange);
 });
 
 const displayDropdown = (event) => {
@@ -226,10 +226,11 @@ const hideDropdown = () => {
 };
 
 const handleLogout = () => {
-  logout();
-  hideDropdown(); // Hide the dropdown menu after logging out
+  authStore.logout();
+  hideDropdown(); // Cachez le menu déroulant après la déconnexion
 };
 </script>
+
 
 <style scoped>
 .group {

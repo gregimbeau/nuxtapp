@@ -46,51 +46,59 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useAuth } from "@/composables/useAuth";
+import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth'; // Assurez-vous que ce chemin correspond à l'emplacement de votre magasin Pinia
 
-const { login, checkAuthStatus } = useAuth();
-const credentials = ref({ username: "", password: "" });
-const loginButtonText = ref("Logging In");
+// Initialisation des références
+const credentials = ref({ username: '', password: '' });
+const loginButtonText = ref('Log In');
 const isLoggingIn = ref(false);
+const loginCompleted = ref(false); // Pour suivre si la connexion est terminée
 
-// Add a ref to track if the login has completed
-const loginCompleted = ref(false);
+// Utiliser le magasin Pinia pour l'authentification
+const authStore = useAuthStore();
 
-checkAuthStatus();
+// Vérifier le statut de l'authentification au démarrage
+authStore.checkAuthStatus();
 
 const handleLogin = async () => {
   isLoggingIn.value = true;
-  loginButtonText.value = "Logging in...";
+  loginButtonText.value = 'Logging in...';
 
-  // Schedule "Validating Credentials" after 5 seconds
+  // Programmer "Validating Credentials" après 5 secondes
   setTimeout(() => {
     if (!loginCompleted.value) {
-      loginButtonText.value = "Validating Credentials";
+      loginButtonText.value = 'Validating Credentials';
     }
   }, 5000);
 
-  // Conditionally schedule "Almost there..." after an additional 5 seconds (10 seconds in total)
+  // Programmer conditionnellement "Almost there..." après 5 secondes supplémentaires (10 secondes au total)
   const almostThereTimeout = setTimeout(() => {
     if (!loginCompleted.value) {
-      loginButtonText.value = "Almost there...";
+      loginButtonText.value = 'Almost there...';
     }
   }, 10000);
 
-  // Simulate login operation and complete after additionnal time
+  // Simuler l'opération de connexion et compléter après un temps supplémentaire
   setTimeout(async () => {
     if (!loginCompleted.value) {
-      await login(credentials.value);
-      loginCompleted.value = true; // Mark login as completed
-      isLoggingIn.value = false;
-      loginButtonText.value = "Logging In";
-      // Add your redirection logic here, if applicable
+      try {
+        await authStore.login(credentials.value); // Utiliser l'action de connexion de Pinia
+        loginCompleted.value = true; // Marquer la connexion comme terminée
+        isLoggingIn.value = false;
+        loginButtonText.value = 'Logged In';
+        // Ajouter ici votre logique de redirection, si applicable
+      } catch (error) {
+        loginButtonText.value = 'Log In'; // Gérer les erreurs de connexion
+        isLoggingIn.value = false;
+      }
+      // Si la connexion se termine avant le message "Almost there...", annuler le message programmé
+      clearTimeout(almostThereTimeout);
     }
-    // If login completes before the "Almost there..." message, cancel the scheduled message
-    clearTimeout(almostThereTimeout);
-  }, 11000); // This simulates the login delay. Adjust as needed based on actual login response time
+  }, 15000); // Ce temps simule le délai de connexion. Ajustez selon le temps de réponse réel de la connexion
 };
 </script>
+
 
 <style scoped>
 /* Adjusting for a fade effect instead of swipe */
