@@ -46,11 +46,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
+import { ref } from "vue";
+import { useAuthStore } from "@/stores/auth";
 
-const credentials = ref({ username: '', password: '' });
-const loginButtonText = ref('Log In');
+const credentials = ref({ username: "", password: "" });
+const loginButtonText = ref("Log In");
 const isLoggingIn = ref(false);
 const loginCompleted = ref(false);
 
@@ -60,50 +60,47 @@ authStore.checkAuthStatus();
 
 const handleLogin = async () => {
   isLoggingIn.value = true;
-  loginButtonText.value = 'Logging in...';
+  loginButtonText.value = "Logging in...";
+  loginCompleted.value = false;
 
-  // Programmer "Validating Credentials" après 5 secondes
-  setTimeout(() => {
-    if (!loginCompleted.value) {
-      loginButtonText.value = 'Validating Credentials';
-    }
-  }, 5000);
-
-  // Déclarer un tableau de messages à alterner
-  const messages = ["Almost there...", "Be patient", "A little more..."];
+  const messages = [
+    "Validating Credentials", "Almost there...", "Be patient", 
+    "A little more...", "Almost there...", "No kidding, almost!", 
+    "You're ok...", "Soon now...",
+  ];
   let messageIndex = 0;
 
-  // Alterner les messages toutes les 5 secondes, après les 10 premières secondes
   const messageInterval = setInterval(() => {
     if (!loginCompleted.value) {
-      loginButtonText.value = messages[messageIndex % messages.length];
-      messageIndex++; // Passer au message suivant pour la prochaine itération
-    } else {
-      clearInterval(messageInterval); // Si la connexion est terminée, arrêter l'intervalle
+      loginButtonText.value = messages[messageIndex++ % messages.length];
     }
   }, 5000);
 
-  // Simuler l'opération de connexion et compléter après un temps supplémentaire
-  setTimeout(async () => {
+  const minimumWaitTime = setTimeout(async () => {
+    try {
+      await authStore.login(credentials.value);
+      loginCompleted.value = true;
+      isLoggingIn.value = false;
+      loginButtonText.value = "Logged In";
+      clearInterval(messageInterval); // Nettoyer l'intervalle immédiatement après la connexion réussie
+    } catch (error) {
+      // Ne pas déclarer l'échec ici car nous devons attendre 45 secondes avant cela
+      console.error("Error during login:", error.message);
+    }
+  }, 10000); // Attendre 10 secondes avant d'essayer de se connecter
+
+  // Définir un délai maximal avant de déclarer l'échec
+  const failureTimeout = setTimeout(() => {
     if (!loginCompleted.value) {
-      try {
-        await authStore.login(credentials.value); 
-        loginCompleted.value = true;
-        isLoggingIn.value = false;
-        loginButtonText.value = 'Logged In';
-        // logique de redirection
-      } catch (error) {
-        loginButtonText.value = 'Log In';
-        isLoggingIn.value = false;
-      }
-      // Nettoyer l'intervalle et le timeout une fois la connexion complétée
+      loginCompleted.value = true;
+      isLoggingIn.value = false;
+      loginButtonText.value = "Try again later";
       clearInterval(messageInterval);
     }
-  }, 15000); // Ce temps simule le délai de connexion.
+  }, 65000); // Délai d'attente avant de déclarer l'échec
 };
 
 </script>
-
 
 <style scoped>
 /* Adjusting for a fade effect instead of swipe */

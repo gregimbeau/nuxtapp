@@ -32,8 +32,10 @@ export const useAuthStore = defineStore("auth", {
         });
 
         if (!response.ok) {
-          throw new Error("Login error");
+          throw new Error("Login failed. Server responded with an error.");
         }
+
+        const data = await response.json();
 
         this.setLoggedIn(true);
         showMessage("Login successful!", "success");
@@ -44,8 +46,11 @@ export const useAuthStore = defineStore("auth", {
           "error"
         );
         this.setLoggedIn(false);
+        // Propagez l'erreur pour la gestion des erreurs externe
+        throw error;
       }
     },
+
     logout() {
       const router = useRouter();
       const { showMessage } = useFlashMessage();
