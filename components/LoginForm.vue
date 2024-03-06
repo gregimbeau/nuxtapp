@@ -47,18 +47,15 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth'; // Assurez-vous que ce chemin correspond à l'emplacement de votre magasin Pinia
+import { useAuthStore } from '@/stores/auth';
 
-// Initialisation des références
 const credentials = ref({ username: '', password: '' });
 const loginButtonText = ref('Log In');
 const isLoggingIn = ref(false);
-const loginCompleted = ref(false); // Pour suivre si la connexion est terminée
+const loginCompleted = ref(false);
 
-// Utiliser le magasin Pinia pour l'authentification
 const authStore = useAuthStore();
 
-// Vérifier le statut de l'authentification au démarrage
 authStore.checkAuthStatus();
 
 const handleLogin = async () => {
@@ -72,31 +69,39 @@ const handleLogin = async () => {
     }
   }, 5000);
 
-  // Programmer conditionnellement "Almost there..." après 5 secondes supplémentaires (10 secondes au total)
-  const almostThereTimeout = setTimeout(() => {
+  // Déclarer un tableau de messages à alterner
+  const messages = ["Almost there...", "Be patient", "A little more..."];
+  let messageIndex = 0;
+
+  // Alterner les messages toutes les 5 secondes, après les 10 premières secondes
+  const messageInterval = setInterval(() => {
     if (!loginCompleted.value) {
-      loginButtonText.value = 'Almost there...';
+      loginButtonText.value = messages[messageIndex % messages.length];
+      messageIndex++; // Passer au message suivant pour la prochaine itération
+    } else {
+      clearInterval(messageInterval); // Si la connexion est terminée, arrêter l'intervalle
     }
-  }, 10000);
+  }, 5000);
 
   // Simuler l'opération de connexion et compléter après un temps supplémentaire
   setTimeout(async () => {
     if (!loginCompleted.value) {
       try {
-        await authStore.login(credentials.value); // Utiliser l'action de connexion de Pinia
-        loginCompleted.value = true; // Marquer la connexion comme terminée
+        await authStore.login(credentials.value); 
+        loginCompleted.value = true;
         isLoggingIn.value = false;
         loginButtonText.value = 'Logged In';
-        // Ajouter ici votre logique de redirection, si applicable
+        // logique de redirection
       } catch (error) {
-        loginButtonText.value = 'Log In'; // Gérer les erreurs de connexion
+        loginButtonText.value = 'Log In';
         isLoggingIn.value = false;
       }
-      // Si la connexion se termine avant le message "Almost there...", annuler le message programmé
-      clearTimeout(almostThereTimeout);
+      // Nettoyer l'intervalle et le timeout une fois la connexion complétée
+      clearInterval(messageInterval);
     }
-  }, 15000); // Ce temps simule le délai de connexion. Ajustez selon le temps de réponse réel de la connexion
+  }, 15000); // Ce temps simule le délai de connexion.
 };
+
 </script>
 
 
