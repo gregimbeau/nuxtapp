@@ -190,26 +190,35 @@ const uploadImage = async (event) => {
   if (!files.length) return;
 
   const formData = new FormData();
-  formData.append("file", files[0]);
-  formData.append("upload_preset", "eom5grdo");
+  formData.append('file', files[0]);
+  formData.append('upload_preset', 'eom5grdo');
 
   try {
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dmq3cpw6u/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dmq3cpw6u/image/upload', {
+      method: 'POST',
+      body: formData
+    });
 
-    const data = await response.json();
-    user.value.picture = data.secure_url; // Save the URL to your user object
-    alert("Image uploaded successfully!");
+    const uploadData = await uploadResponse.json();
+    const pictureUrl = uploadData.secure_url; // URL of the uploaded image
+    user.value.picture = pictureUrl; // Update local user object
+
+    // Now, update the user record in your database
+    const userId = authStore.userId; // Make sure you have the current user's ID
+    const updateResponse = await axios.put(`https://apiusers-dbia.onrender.com/users/${userId}`, {
+      ...user.value,
+      picture: pictureUrl // Include the new picture URL in the update
+    });
+
+    if (updateResponse.data) {
+      alert('Profile picture updated successfully!');
+    }
   } catch (error) {
-    console.error("Failed to upload image:", error);
-    alert("Failed to upload image.");
+    console.error('Failed to upload image or update user:', error);
+    alert('Failed to upload image or update profile.');
   }
 };
+
 
 // Adjusted to accept userId as a parameter
 const fetchUser = async (userId) => {
