@@ -1,4 +1,6 @@
 <template>
+    <FlashMessage />
+
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold mb-6 text-center">User Profile</h1>
     <div
@@ -158,6 +160,7 @@
 import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 
+const { showMessage } = useFlashMessage();
 const authStore = useAuthStore();
 const router = useRouter();
 const user = ref({}); // Initialize user as an empty object
@@ -211,23 +214,20 @@ const uploadImage = async (event) => {
     });
 
     if (updateResponse.data) {
-      alert('Profile picture updated successfully!');
+      showMessage("Profile picture updated successfully!", "success");
     }
   } catch (error) {
-    console.error('Failed to upload image or update user:', error);
-    alert('Failed to upload image or update profile.');
+    showMessage('Failed to upload image or update profile.');
   }
 };
 
 
 // Adjusted to accept userId as a parameter
 const fetchUser = async (userId) => {
-  console.log(`Fetching data for user ID: ${userId}`); // Debug log
   try {
     const response = await axios.get(
       `https://apiusers-dbia.onrender.com/users/${userId}`
     );
-    console.log(response.data); // Debug log to inspect the fetched data
     user.value = response.data;
   } catch (error) {
     console.error("Failed to fetch user data:", error);
@@ -241,10 +241,10 @@ const updateUser = async () => {
       `https://apiusers-dbia.onrender.com/users/${authStore.userId}`,
       user.value
     );
-    alert("Profile updated successfully.");
+    showMessage("Profile updated successfully.");
   } catch (error) {
     console.error("Failed to update user:", error);
-    alert("Failed to update profile.");
+    showMessage("Failed to update profile.");
   }
 };
 
