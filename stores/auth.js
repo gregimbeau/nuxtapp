@@ -5,15 +5,26 @@ import { useFlashMessage } from "@/composables/useFlashMessage";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     isLoggedIn: false,
+    userId: null,
   }),
   actions: {
-    setLoggedIn(value) {
+    setLoggedIn(value, userId = null) {
       this.isLoggedIn = value;
+      this.userId = userId;
+
       if (typeof window !== "undefined") {
         localStorage.setItem("isLoggedIn", String(value));
+        // Update for handling null values effectively
+        if (userId) {
+          localStorage.setItem("userId", userId);
+        } else {
+          localStorage.removeItem("userId");
+        }
       }
       window.dispatchEvent(
-        new CustomEvent("auth-change", { detail: { isLoggedIn: value } })
+        new CustomEvent("auth-change", {
+          detail: { isLoggedIn: value, userId },
+        })
       );
     },
     async login(credentials) {
@@ -37,7 +48,7 @@ export const useAuthStore = defineStore("auth", {
 
         const data = await response.json();
 
-        this.setLoggedIn(true);
+        this.setLoggedIn(true, data.userId);
         showMessage("Login successful!", "success");
         router.push("/");
       } catch (error) {
@@ -62,7 +73,8 @@ export const useAuthStore = defineStore("auth", {
     checkAuthStatus() {
       if (typeof window !== "undefined") {
         const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-        this.setLoggedIn(loggedIn);
+        const userId = localStorage.getItem("userId") || null;
+        this.setLoggedIn(loggedIn, userId);
       }
     },
   },
