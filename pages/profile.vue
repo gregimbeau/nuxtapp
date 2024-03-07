@@ -20,12 +20,12 @@
             <span class="flex-1 text-sm text-gray-600 ml-4">{{
               user.username || "Not set"
             }}</span>
-            <button
+            <!-- <button
               type="button"
               @click="toggleInput('username')"
               class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">
               Click to change
-            </button>
+            </button> -->
           </div>
           <input
             v-show="showInput.username"
