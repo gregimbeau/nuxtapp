@@ -5,18 +5,18 @@
       <form @submit.prevent="updateUser" class="space-y-4">
         <!-- Username Field -->
         <div class="space-y-1">
-          <div class="flex  items-center">
-            <span class="text-md font-semibold">Username:</span>
-            <span class="ml-4 text-sm text-gray-600">{{ user.username || 'Not set' }}</span>
-            <!-- <button type="button" @click="toggleInput('username')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button> -->
+          <div class="flex items-center">
+            <span class="text-md font-semibold w-32">Username:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.username || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('username')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <input v-show="showInput.username" type="text" v-model="user.username" id="username" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new username'">
         </div>
         <!-- Email Field -->
         <div class="space-y-1">
           <div class="flex justify-between items-center">
-            <span class="text-md font-semibold">Email:</span>
-            <span class="text-sm text-gray-600">{{ user.email || 'Not set' }}</span>
+            <span class="text-md font-semibold w-32">Email:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.email || 'Not set' }}</span>
             <button type="button" @click="toggleInput('email')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <input v-show="showInput.email" type="email" v-model="user.email" id="email" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new email'">
@@ -24,8 +24,8 @@
         <!-- Picture URL Field -->
         <div class="space-y-1">
           <div class="flex justify-between items-center">
-            <span class="text-md font-semibold">Picture URL:</span>
-            <span class="text-sm text-gray-600">{{ user.picture || 'Not set' }}</span>
+            <span class="text-md font-semibold w-32">Picture URL:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.picture || 'Not set' }}</span>
             <button type="button" @click="toggleInput('picture')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <input v-show="showInput.picture" type="text" v-model="user.picture" id="picture" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new picture URL'">
@@ -33,8 +33,8 @@
         <!-- Description Field -->
         <div class="space-y-1">
           <div class="flex justify-between items-center">
-            <span class="text-md font-semibold">Description:</span>
-            <span class="text-sm text-gray-600">{{ user.description || 'Not set' }}</span>
+            <span class="text-md font-semibold w-32">Description:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.description || 'Not set' }}</span>
             <button type="button" @click="toggleInput('description')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <textarea v-show="showInput.description" v-model="user.description" id="description" rows="3" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new description'"></textarea>
@@ -42,8 +42,8 @@
         <!-- First Name Field -->
         <div class="space-y-1">
           <div class="flex justify-between items-center">
-            <span class="text-md font-semibold">First Name:</span>
-            <span class="text-sm text-gray-600">{{ user.firstname || 'Not set' }}</span>
+            <span class="text-md font-semibold w-32">First Name:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.firstname || 'Not set' }}</span>
             <button type="button" @click="toggleInput('firstname')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <input v-show="showInput.firstname" type="text" v-model="user.firstname" id="firstname" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new first name'">
@@ -51,8 +51,8 @@
         <!-- Surname Field -->
         <div class="space-y-1">
           <div class="flex justify-between items-center">
-            <span class="text-md font-semibold">Surname:</span>
-            <span class="text-sm text-gray-600">{{ user.surname || 'Not set' }}</span>
+            <span class="text-md font-semibold w-32">Surname:</span>
+            <span class="flex-1 text-sm text-gray-600 ml-4">{{ user.surname || 'Not set' }}</span>
             <button type="button" @click="toggleInput('surname')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
           </div>
           <input v-show="showInput.surname" type="text" v-model="user.surname" id="surname" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new surname'">
@@ -68,6 +68,7 @@
     </div>
   </div>
 </template>
+
 
 
 
