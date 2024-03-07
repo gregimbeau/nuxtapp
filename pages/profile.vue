@@ -1,54 +1,95 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">User Profile</h1>
-    <div v-if="user">
-      <form @submit.prevent="updateUser">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6 text-center">User Profile</h1>
+    <div v-if="user" class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+      <form @submit.prevent="updateUser" class="space-y-4">
         <!-- Username Field -->
-        <div class="mb-4">
-          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-          <input type="text" v-model="user.username" id="username" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.username ? '' : 'Nothing yet, you can edit it below'">
+        <div class="space-y-1">
+          <div class="flex  items-center">
+            <span class="text-md font-semibold">Username:</span>
+            <span class="ml-4 text-sm text-gray-600">{{ user.username || 'Not set' }}</span>
+            <!-- <button type="button" @click="toggleInput('username')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button> -->
+          </div>
+          <input v-show="showInput.username" type="text" v-model="user.username" id="username" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new username'">
         </div>
         <!-- Email Field -->
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" v-model="user.email" id="email" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.email ? '' : 'Nothing yet, you can edit it below'">
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-md font-semibold">Email:</span>
+            <span class="text-sm text-gray-600">{{ user.email || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('email')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
+          </div>
+          <input v-show="showInput.email" type="email" v-model="user.email" id="email" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new email'">
         </div>
         <!-- Picture URL Field -->
-        <div class="mb-4">
-          <label for="picture" class="block text-sm font-medium text-gray-700">Picture URL</label>
-          <input type="text" v-model="user.picture" id="picture" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.picture ? '' : 'Nothing yet, you can edit it below'">
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-md font-semibold">Picture URL:</span>
+            <span class="text-sm text-gray-600">{{ user.picture || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('picture')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
+          </div>
+          <input v-show="showInput.picture" type="text" v-model="user.picture" id="picture" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new picture URL'">
         </div>
         <!-- Description Field -->
-        <div class="mb-4">
-          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-          <textarea v-model="user.description" id="description" rows="3" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.description ? '' : 'Nothing yet, you can edit it below'"></textarea>
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-md font-semibold">Description:</span>
+            <span class="text-sm text-gray-600">{{ user.description || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('description')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
+          </div>
+          <textarea v-show="showInput.description" v-model="user.description" id="description" rows="3" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new description'"></textarea>
         </div>
         <!-- First Name Field -->
-        <div class="mb-4">
-          <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
-          <input type="text" v-model="user.firstname" id="firstname" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.firstname ? '' : 'Nothing yet, you can edit it below'">
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-md font-semibold">First Name:</span>
+            <span class="text-sm text-gray-600">{{ user.firstname || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('firstname')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
+          </div>
+          <input v-show="showInput.firstname" type="text" v-model="user.firstname" id="firstname" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new first name'">
         </div>
         <!-- Surname Field -->
-        <div class="mb-4">
-          <label for="surname" class="block text-sm font-medium text-gray-700">Surname</label>
-          <input type="text" v-model="user.surname" id="surname" class="mt-1 block w-full border border-gray-300 p-2 shadow-sm" :placeholder="user.surname ? '' : 'Nothing yet, you can edit it below'">
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-md font-semibold">Surname:</span>
+            <span class="text-sm text-gray-600">{{ user.surname || 'Not set' }}</span>
+            <button type="button" @click="toggleInput('surname')" class="text-xs text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1">Click to change</button>
+          </div>
+          <input v-show="showInput.surname" type="text" v-model="user.surname" id="surname" class="mt-1 block w-full border border-gray-300 p-2 rounded shadow-sm" :placeholder="'Enter your new surname'">
         </div>
         <!-- Submit Button -->
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Profile</button>
+        <div class="flex justify-center mt-4">
+          <button type="submit" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700 transition duration-200" v-show="Object.values(showInput).some(v => v)">Update Profile</button>
+        </div>
       </form>
+      <div class="mt-6 flex justify-center">
+        <button @click="logout" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-700 transition duration-200">Logout</button>
+      </div>
     </div>
-    <!-- Logout Button -->
-    <button @click="logout" class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Logout</button>
   </div>
 </template>
 
+
+
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
 const authStore = useAuthStore();
 const router = useRouter();
 const user = ref({}); // Initialize user as an empty object
+const showInput = reactive({
+  username: false,
+  email: false,
+  picture: false,
+  description: false,
+  firstname: false,
+  surname: false,
+});
+// Toggle function to show input fields
+const toggleInput = (field) => {
+  showInput[field] = !showInput[field];
+};
 
 onMounted(async () => {
   authStore.checkAuthStatus();
