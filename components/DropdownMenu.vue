@@ -29,12 +29,33 @@
           to="/posts"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white rounded-t-lg">
           <!-- Blog Icon -->
-<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 20h13V7l-3.5-4h-6L5.5 7v13z"></path>
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3.5l4 4"></path>
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 13h4.5v6H3.5v-6H8"></path>
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 15h8"></path>
-</svg>
+          <svg
+            class="h-4 w-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5.5 20h13V7l-3.5-4h-6L5.5 7v13z"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 3.5l4 4"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 13h4.5v6H3.5v-6H8"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 15h8"></path>
+          </svg>
 
           Blog
         </NuxtLink>
@@ -42,7 +63,7 @@
         <div class="border-t border-gray-300"></div>
         <NuxtLink
           to="/"
-          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white rounded-t-lg">
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white ">
           <!-- Home Icon -->
           <svg
             class="h-4 w-4 mr-2"
@@ -86,10 +107,23 @@
           to="/createPost"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
           <!-- Profile Icon -->
-<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 21v-2.586a1 1 0 01.293-.707l11-11a1 1 0 011.414 0l2.586 2.586a1 1 0 010 1.414l-11 11A1 1 0 017.586 21H5zm0 0v-4h4"></path>
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7l5-5"></path>
-</svg>
+          <svg
+            class="h-4 w-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 21v-2.586a1 1 0 01.293-.707l11-11a1 1 0 011.414 0l2.586 2.586a1 1 0 010 1.414l-11 11A1 1 0 017.586 21H5zm0 0v-4h4"></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 7l5-5"></path>
+          </svg>
 
           Ecrire article
         </NuxtLink>
@@ -200,7 +234,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from "vue";
 
 const dropdownRef = ref(null);
 const hamburgerRef = ref(null);
@@ -232,13 +266,13 @@ const onClickOutside = (event) => {
 
 onMounted(() => {
   authStore.checkAuthStatus();
-  window.addEventListener('click', onClickOutside);
-  window.addEventListener('auth-change', handleAuthChange);
+  window.addEventListener("click", onClickOutside);
+  window.addEventListener("auth-change", handleAuthChange);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('click', onClickOutside);
-  window.removeEventListener('auth-change', handleAuthChange);
+  window.removeEventListener("click", onClickOutside);
+  window.removeEventListener("auth-change", handleAuthChange);
 });
 
 const displayDropdown = (event) => {
@@ -257,7 +291,6 @@ const handleLogout = () => {
   hideDropdown(); // Cachez le menu déroulant après la déconnexion
 };
 </script>
-
 
 <style scoped>
 .group {
