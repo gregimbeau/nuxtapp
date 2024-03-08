@@ -26,6 +26,21 @@
         class="dropdown-content absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg flex flex-col z-50"
         @mouseleave="hideDropdown">
         <NuxtLink
+          to="/posts"
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white rounded-t-lg">
+          <!-- Blog Icon -->
+<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 20h13V7l-3.5-4h-6L5.5 7v13z"></path>
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3.5l4 4"></path>
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 13h4.5v6H3.5v-6H8"></path>
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 15h8"></path>
+</svg>
+
+          Blog
+        </NuxtLink>
+        <!-- Separator -->
+        <div class="border-t border-gray-300"></div>
+        <NuxtLink
           to="/"
           class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white rounded-t-lg">
           <!-- Home Icon -->
@@ -64,6 +79,19 @@
               d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-2.21 0-6 1.343-6 4v2h12v-2c0-2.657-3.79-4-6-4z"></path>
           </svg>
           Profile
+        </NuxtLink>
+        <div v-if="authStore.isLoggedIn" class="border-t border-gray-300"></div>
+        <NuxtLink
+          v-if="authStore.isLoggedIn"
+          to="/createPost"
+          class="dropdown-item px-3 py-2 flex items-center text-black hover:bg-[#12b488] hover:text-white">
+          <!-- Profile Icon -->
+<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 21v-2.586a1 1 0 01.293-.707l11-11a1 1 0 011.414 0l2.586 2.586a1 1 0 010 1.414l-11 11A1 1 0 017.586 21H5zm0 0v-4h4"></path>
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7l5-5"></path>
+</svg>
+
+          Ecrire article
         </NuxtLink>
         <div v-if="authStore.isLoggedIn" class="border-t border-gray-300"></div>
 
