@@ -56,7 +56,6 @@
               stroke-width="2"
               d="M8 15h8"></path>
           </svg>
-
           Blog
         </NuxtLink>
         <!-- Separator -->
@@ -125,7 +124,7 @@
               d="M15 7l5-5"></path>
           </svg>
 
-          Ecrire article
+          Write article
         </NuxtLink>
         <div v-if="authStore.isLoggedIn" class="border-t border-gray-300"></div>
 

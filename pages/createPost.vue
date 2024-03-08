@@ -2,7 +2,7 @@
   <FlashMessage />
 
   <div class="max-w-4xl mx-auto p-5">
-    <h1 class="text-2xl font-bold mb-6 text-center">Créer un nouveau post</h1>
+    <h1 class="text-2xl font-bold mb-6 text-center">Create new post</h1>
     <div class="bg-white shadow-md rounded-lg p-6">
       <form
         @submit.prevent="post.id ? updatePost() : submitPost()"
@@ -10,7 +10,7 @@
         <input
           v-model="post.title"
           type="text"
-          placeholder="Titre"
+          placeholder="Title"
           required
           class="block w-full border-gray-300 p-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm" />
         <div class="toolbar flex space-x-2 mt-2">
@@ -77,12 +77,12 @@
         <textarea
           ref="textareaRef"
           v-model="post.content"
-          placeholder="Contenu en Markdown"
+          placeholder="Markdown content"
           required
           class="mt-2 block w-full border-gray-300 p-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm"
           rows="10"></textarea>
         <div class="mt-4">
-          <label class="block mb-2">Aperçu du contenu:</label>
+          <label class="block mb-2">Content preview:</label>
           <div
             v-html="renderedMarkdown"
             class="markdown-preview p-4 border border-gray-300 rounded-md"></div>
@@ -90,7 +90,7 @@
         <button
           type="submit"
           class="mt-4 w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-          {{ post.id ? "Mettre à jour" : "Publier" }}
+          {{ post.id ? "Update" : "Publish" }}
         </button>
       </form>
     </div>
@@ -180,7 +180,7 @@ function addMarkdown(before, after) {
 function addLink() {
   if (!textareaRef.value) return;
 
-  const url = prompt("Entrez l'URL du lien :", "http://");
+  const url = prompt("Enter link URL:", "http://");
   if (url) {
     const start = textareaRef.value.selectionStart;
     const end = textareaRef.value.selectionEnd;
@@ -202,10 +202,9 @@ async function submitPost() {
     });
 
     post.value = { ...post.value, id: response.data.postId };
-    showMessage("Post créé avec succès", "success");
+    showMessage("Post created successfully", "success");
   } catch (error) {
-    console.error("Erreur lors de la création du post:", error);
-    showMessage("Erreur lors de la création du post", "error");
+    showMessage("Error while creating post", "error");
   }
 }
 
@@ -217,10 +216,9 @@ async function updatePost() {
       content: post.value.content,
     });
 
-    showMessage("Post mis à jour avec succès", "success");
+    showMessage("Post updated successfully", "success");
   } catch (error) {
-    console.error("Erreur lors de la mise à jour du post:", error);
-    showMessage("Erreur lors de la mise à jour du post", "error");
+    showMessage("Error while updating post", "error");
   }
 }
 </script>
