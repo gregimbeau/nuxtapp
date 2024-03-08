@@ -14,8 +14,9 @@
           Publié le {{ new Date(post.created_at).toLocaleDateString() }} à
           {{ new Date(post.created_at).toLocaleTimeString() }}
         </p>
-        <div v-html="post.content" class="text-gray-800 markdown"></div>
-        <!-- Utilisation de v-html ici -->
+        <!-- Affichage correct des listes Markdown -->
+        <div class="text-gray-800 markdown" v-html="parseMarkdown(post.content)"></div>
+        <!-- Fin de l'affichage correct des listes Markdown -->
         <button
           v-if="authStore.isLoggedIn"
           @click="deletePost(post.id)"
@@ -50,11 +51,19 @@ async function fetchPosts() {
     const response = await axios.get(`${config.public.apiUrl}/api/posts`);
     posts.value = response.data.map((post) => ({
       ...post,
-      content: DOMPurify.sanitize(md.render(post.content)), // Clean and render Markdown content
+      // Clean and render Markdown content
+      content: DOMPurify.sanitize(parseMarkdown(post.content)),
     }));
   } catch (error) {
     console.error("Erreur lors de la récupération des posts:", error);
   }
+}
+
+function parseMarkdown(content) {
+  const htmlContent = md.render(content);
+  // Ajoutez les balises UL et LI pour les listes à puces
+  return htmlContent.replace(/<ul>/g, "<ul class='list-disc ml-8'>")
+                   .replace(/<li>/g, "<li class='mb-2'>");
 }
 
 async function deletePost(postId) {
